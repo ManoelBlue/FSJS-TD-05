@@ -72,38 +72,36 @@ function showModalWindow(user, index) {
         </div>
     `)
 
-    const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
-    const cardsLength = cards.length - 1;
-    const prev = document.getElementById("modal-prev");
-    const next = document.getElementById("modal-next");
-    const closeBtn = document.getElementById("modal-close-btn");
-
-    console.log(cardsLength);
-
-    prev.addEventListener("click", () => {
-        console.log(index);
-        let prevIndex = (index === 0) ? cardsLength : index - 1;
-        console.log(prevIndex);
-        removeModalWindow();
-        showModalWindow(users[prevIndex], prevIndex);
-        index = prevIndex;
-    });
-    next.addEventListener("click", () => {
-        console.log(index);
-        let nextIndex = (index === cardsLength) ? 0 : index + 1;
-        console.log(nextIndex);
-        removeModalWindow();
-        showModalWindow(users[nextIndex], nextIndex);
-        index = nextIndex;
-    });
-
-    closeBtn.addEventListener("click", removeModalWindow);
+    handleCardBtns(index);
 };
 
 function removeModalWindow() {
     const modalWindow = document.querySelector(".modal-container");
     modalWindow.remove();
 };
+
+function handleCardBtns(index) {
+    const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
+    const cardsLength = cards.length - 1;
+    const prev = document.getElementById("modal-prev");
+    const next = document.getElementById("modal-next");
+    const closeBtn = document.getElementById("modal-close-btn");
+
+    prev.addEventListener("click", () => {
+        let prevIndex = (index === 0) ? cardsLength : index - 1;
+        removeModalWindow();
+        showModalWindow(users[prevIndex], prevIndex);
+        index = prevIndex;
+    });
+    next.addEventListener("click", () => {
+        let nextIndex = (index === cardsLength) ? 0 : index + 1;
+        removeModalWindow();
+        showModalWindow(users[nextIndex], nextIndex);
+        index = nextIndex;
+    });
+
+    closeBtn.addEventListener("click", removeModalWindow);
+}
 
 // Fetch users:
 fetch("https://randomuser.me/api/?results=12&inc=name,location,email,picture,cell,dob&nat=gb,us")
