@@ -9,7 +9,7 @@
     100% {opacity: 1;}
 }
 
-@keyframes fadeBG {
+@keyframes namePopup {
     0% {
         background-color: white;
         font-size: 1.17em;
@@ -38,7 +38,7 @@
 /* Extra styles */
 
 .modal-name {
-    animation: fadeBG 1.2s linear forwards;
+    animation: namePopup 1.2s linear forwards;
 }
 
 .modal-info-container {
