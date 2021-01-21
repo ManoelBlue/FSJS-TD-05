@@ -6,6 +6,6 @@
     100% {opacity: 1;}
 }
 
-.modal-info-container {
+.fadein {
     animation: fadein .5s;
 }

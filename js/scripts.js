@@ -52,22 +52,22 @@ function removeModalWindow() {
 function switchInfo(users, index, date, phone) {
     const user = users[index];
     const userInfo = document.querySelector(".modal-info-container");
-    userInfo.innerHTML = `
-        <img class="modal-img" src="${user.picture.medium}" alt="profile picture">
-        <h3 id="name" class="modal-name cap">name${user.name.first}</h3>
-        <p class="modal-text">${user.email}</p>
-        <p class="modal-text cap">${user.location.city}</p>
-        <hr>
-        <p class="modal-text">${phone}</p>
-        <p class="modal-text">${user.location.street.numer} ${user.location.street.name}, ${user.location.city}, ${user.location.postcode}</p>
-        <p class="modal-text">Birthday: ${date}</p>
-    `;
-};
+    const modal = document.querySelector(".modal");
 
-function switchModalWindow(users, newIndex, date, phone) {
-    switchInfo(users, newIndex, date, phone);
-    index = newIndex;
-}
+    userInfo.remove();
+    modal.insertAdjacentHTML("beforeend", `
+        <div class="modal-info-container fadein">
+            <img class="modal-img" src="${user.picture.medium}" alt="profile picture">
+            <h3 id="name" class="modal-name cap">name${user.name.first}</h3>
+            <p class="modal-text">${user.email}</p>
+            <p class="modal-text cap">${user.location.city}</p>
+            <hr>
+            <p class="modal-text">${phone}</p>
+            <p class="modal-text">${user.location.street.numer} ${user.location.street.name}, ${user.location.city}, ${user.location.postcode}</p>
+            <p class="modal-text">Birthday: ${date}</p>
+        </div>
+    `);
+};
 
 function handleCardBtns(users, index, date, phone) {
     const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
@@ -78,11 +78,13 @@ function handleCardBtns(users, index, date, phone) {
 
     prev.addEventListener("click", () => {
         let prevIndex = (index === 0) ? cardsLength : index - 1;
-        switchModalWindow(users, prevIndex, date, phone);
+        switchInfo(users, prevIndex, date, phone);
+        index = prevIndex;
     });
     next.addEventListener("click", () => {
         let nextIndex = (index === cardsLength) ? 0 : index + 1;
-        switchModalWindow(users, nextIndex, date, phone);
+        switchInfo(users, nextIndex, date, phone);
+        index = nextIndex;
     });
 
     closeBtn.addEventListener("click", removeModalWindow);
@@ -104,7 +106,7 @@ function showModalWindow(users, index) {
         <div class="modal-container">
             <div class="modal">
                 <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-                <div class="modal-info-container">
+                <div class="modal-info-container fadein">
                     <img class="modal-img" src="${user.picture.medium}" alt="profile picture">
                     <h3 id="name" class="modal-name cap">name${user.name.first}</h3>
                     <p class="modal-text">${user.email}</p>
