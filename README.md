@@ -1,7 +1,7 @@
 # Full Stack JavaScript Techdegree Project 05
     Public API Requests
-    Uses JavaScript to create a simple game for guessing a secret phrase.
-    Uses CSS to create fun animations that also improve the user experience.
+    Uses JavaScript to fetch data from an API and display to the user
+    Uses CSS to create animations and ad styles to improve the user experience.
 
 ## CSS extra styles and animations:
 - a fadein animation was added to the modal box content;
