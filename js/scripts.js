@@ -1,4 +1,5 @@
 // Global variables:
+const searchBar = document.querySelector(".search-container");
 const gallery = document.getElementById("gallery");
 const users = [];
 
@@ -6,6 +7,15 @@ const users = [];
 function closeModalWindow() {
     const modalWindow = document.querySelector(".modal-container");
     modalWindow.remove();
+}
+
+function addSearchBar() {
+    searchBar.insertAdjacentHTML("afterbegin", `
+        <form action="#" method="get">
+            <input type="search" id="search-input" class="search-input" placeholder="Search...">
+            <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+        </form>
+    `)
 }
 
 // Fetch users:
