@@ -1,11 +1,15 @@
 // Global variables:
 const gallery = document.getElementById("gallery");
+const users = [];
 
 // Fetch users:
 fetch("https://randomuser.me/api/?results=12&inc=name,location,email,picture")
     .then(response => response.json())
     .then(json => json.results.map(user => {
         console.log(user);
+        users.push(user);
+        console.log(users);
+
         gallery.insertAdjacentHTML("beforeend", `
             <div class="card">
                 <div class="card-img-container">
@@ -23,10 +27,16 @@ fetch("https://randomuser.me/api/?results=12&inc=name,location,email,picture")
 
 // Pop up modal window on a click:
 gallery.addEventListener("click", (e) => {
-    console.dir(e.target);
-    console.dir(e.target.closest(".card"));
+    // console.dir(e.target);
+    // console.dir(e.target.closest(".card"));
 
     const card = e.target.closest(".card");
+    const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
+    const index = cards.indexOf(card);
+
+    console.log(card);
+    console.log(cards);
+    console.log(index);
 
     if(card) {
         gallery.insertAdjacentHTML("afterend", `
@@ -34,10 +44,10 @@ gallery.addEventListener("click", (e) => {
                 <div class="modal">
                     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
                     <div class="modal-info-container">
-                        <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
-                        <h3 id="name" class="modal-name cap">name</h3>
-                        <p class="modal-text">email</p>
-                        <p class="modal-text cap">city</p>
+                        <img class="modal-img" src="${users[index].picture.medium}" alt="profile picture">
+                        <h3 id="name" class="modal-name cap">name${users[index].name.first}</h3>
+                        <p class="modal-text">${users[index].email}</p>
+                        <p class="modal-text cap">${users[index].location.city}</p>
                         <hr>
                         <p class="modal-text">(555) 555-5555</p>
                         <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
