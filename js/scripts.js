@@ -2,6 +2,7 @@
 const searchBar = document.querySelector(".search-container");
 const gallery = document.getElementById("gallery");
 const users = [];
+let isFiltered = false;
 let filteredUsers;
 
 // Helper functions:
@@ -23,6 +24,7 @@ function filterSearch() {
 
     gallery.innerHTML = "";
     filteredUsers.forEach(user => addUser(user));
+    isFiltered = (filteredUsers.length < users.length) ? true : false;
 };
 
 function addUser(user) {
@@ -90,13 +92,13 @@ function handleCardBtns(index) {
     prev.addEventListener("click", () => {
         let prevIndex = (index === 0) ? cardsLength : index - 1;
         removeModalWindow();
-        showModalWindow(users[prevIndex], prevIndex);
+        showModalWindow(isFiltered ? filteredUsers[prevIndex] : users[prevIndex], prevIndex);
         index = prevIndex;
     });
     next.addEventListener("click", () => {
         let nextIndex = (index === cardsLength) ? 0 : index + 1;
         removeModalWindow();
-        showModalWindow(users[nextIndex], nextIndex);
+        showModalWindow(isFiltered ? filteredUsers[nextIndex] : users[nextIndex], nextIndex);
         index = nextIndex;
     });
 
@@ -116,9 +118,8 @@ fetch("https://randomuser.me/api/?results=12&inc=name,location,email,picture,cel
 gallery.addEventListener("click", (e) => {
     const card = e.target.closest(".card");
     const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
-    const cardsLength = cards.lenght - 1;
     const index = cards.indexOf(card);
-    const selectedUser = users[index];
+    const selectedUser = isFiltered ? filteredUsers[index] : users[index];
 
     showModalWindow(selectedUser, index);
 });
