@@ -82,6 +82,12 @@ function removeModalWindow() {
     modalWindow.remove();
 };
 
+function switchModalWindow(newIndex) {
+    removeModalWindow();
+    showModalWindow(isFiltered ? filteredUsers[newIndex] : users[newIndex], newIndex);
+    index = newIndex;
+}
+
 function handleCardBtns(index) {
     const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
     const cardsLength = cards.length - 1;
@@ -91,15 +97,11 @@ function handleCardBtns(index) {
 
     prev.addEventListener("click", () => {
         let prevIndex = (index === 0) ? cardsLength : index - 1;
-        removeModalWindow();
-        showModalWindow(isFiltered ? filteredUsers[prevIndex] : users[prevIndex], prevIndex);
-        index = prevIndex;
+        switchModalWindow(prevIndex);
     });
     next.addEventListener("click", () => {
         let nextIndex = (index === cardsLength) ? 0 : index + 1;
-        removeModalWindow();
-        showModalWindow(isFiltered ? filteredUsers[nextIndex] : users[nextIndex], nextIndex);
-        index = nextIndex;
+        switchModalWindow(nextIndex);
     });
 
     closeBtn.addEventListener("click", removeModalWindow);
