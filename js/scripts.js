@@ -2,6 +2,7 @@
 const searchBar = document.querySelector(".search-container");
 const gallery = document.getElementById("gallery");
 const users = [];
+let filteredUsers;
 
 // Helper functions:
 function closeModalWindow() {
@@ -16,6 +17,16 @@ function addSearchBar() {
             <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
         </form>
     `)
+}
+
+function filterSearch() {
+    const inputValue = document.getElementById("search-input").value.toLowerCase();
+    filteredUsers = users.filter(user => {
+        const userName = `${user.name.first} ${user.name.last}`.toLowerCase();
+        return userName.includes(inputValue);
+    });
+
+    return filteredUsers;
 }
 
 // Fetch users:
