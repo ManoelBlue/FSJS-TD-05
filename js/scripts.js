@@ -2,6 +2,12 @@
 const gallery = document.getElementById("gallery");
 const users = [];
 
+// Helper functions:
+function closeModalWindow() {
+    const modalWindow = document.querySelector(".modal-container");
+    modalWindow.remove();
+}
+
 // Fetch users:
 fetch("https://randomuser.me/api/?results=12&inc=name,location,email,picture,cell,dob")
     .then(response => response.json())
@@ -67,6 +73,7 @@ gallery.addEventListener("click", (e) => {
                 </div>
             </div>
         `)
-    }
 
+        document.getElementById("modal-close-btn").addEventListener("click", closeModalWindow);
+    }
 });
