@@ -22,9 +22,7 @@ function addSearchBar() {
 fetch("https://randomuser.me/api/?results=12&inc=name,location,email,picture,cell,dob")
     .then(response => response.json())
     .then(json => json.results.map(user => {
-        console.log(user);
         users.push(user);
-        console.log(users);
 
         gallery.insertAdjacentHTML("beforeend", `
             <div class="card">
@@ -43,9 +41,6 @@ fetch("https://randomuser.me/api/?results=12&inc=name,location,email,picture,cel
 
 // Pop up modal window on a click:
 gallery.addEventListener("click", (e) => {
-    // console.dir(e.target);
-    // console.dir(e.target.closest(".card"));
-
     const card = e.target.closest(".card");
     const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
     const index = cards.indexOf(card);
