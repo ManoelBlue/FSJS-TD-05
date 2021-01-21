@@ -60,10 +60,10 @@ function switchInfo(users, index, date, phone) {
             <img class="modal-img" src="${user.picture.medium}" alt="profile picture">
             <h3 id="name" class="modal-name cap">${user.name.first} ${user.name.last}</h3>
             <p class="modal-text">${user.email}</p>
-            <p class="modal-text cap">${user.location.city}</p>
+            <p class="modal-text cap">${user.location.city}, ${user.location.state}</p>
             <hr>
             <p class="modal-text">${phone}</p>
-            <p class="modal-text">${user.location.street.numer} ${user.location.street.name}, ${user.location.city}, ${user.location.postcode}</p>
+            <p class="modal-text">${user.location.street.number} ${user.location.street.name}, ${user.location.country}, ${user.location.postcode}</p>
             <p class="modal-text">Birthday: ${date}</p>
         </div>
     `);
@@ -93,6 +93,8 @@ function handleCardBtns(users, index, date, phone) {
 function showModalWindow(users, index) {
     const user = users[index];
 
+    console.log(user);
+
     const dob = user.dob.date;
     const year = dob.slice(0, 4);
     const month = dob.slice(5, 7);
@@ -110,10 +112,10 @@ function showModalWindow(users, index) {
                     <img class="modal-img" src="${user.picture.medium}" alt="profile picture">
                     <h3 id="name" class="modal-name cap">${user.name.first} ${user.name.last}</h3>
                     <p class="modal-text">${user.email}</p>
-                    <p class="modal-text cap">${user.location.city}</p>
+                    <p class="modal-text cap">${user.location.city}, ${user.location.state}</p>
                     <hr>
                     <p class="modal-text">${formattedCell}</p>
-                    <p class="modal-text">${user.location.street.numer} ${user.location.street.name}, ${user.location.city}, ${user.location.postcode}</p>
+                    <p class="modal-text">${user.location.street.number} ${user.location.street.name}, ${user.location.country}, ${user.location.postcode}</p>
                     <p class="modal-text">Birthday: ${date}</p>
                 </div>
             </div>

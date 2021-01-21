@@ -47,7 +47,7 @@
 
 .card:hover {
     background-color: rgba(173, 216, 230, 0.5);
-    box-shadow: 0 0 50px 10px steelblue;
+    box-shadow: 0 0 35px 6px steelblue;
 }
 
 /* Prevent content layout shift */
