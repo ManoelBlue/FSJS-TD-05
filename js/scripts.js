@@ -3,7 +3,7 @@ const gallery = document.getElementById("gallery");
 const users = [];
 
 // Fetch users:
-fetch("https://randomuser.me/api/?results=12&inc=name,location,email,picture")
+fetch("https://randomuser.me/api/?results=12&inc=name,location,email,picture,cell,dob")
     .then(response => response.json())
     .then(json => json.results.map(user => {
         console.log(user);
@@ -49,9 +49,9 @@ gallery.addEventListener("click", (e) => {
                         <p class="modal-text">${users[index].email}</p>
                         <p class="modal-text cap">${users[index].location.city}</p>
                         <hr>
-                        <p class="modal-text">(555) 555-5555</p>
-                        <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-                        <p class="modal-text">Birthday: 10/21/2015</p>
+                        <p class="modal-text">${users[index].cell}</p>
+                        <p class="modal-text">${users[index].location.street.numer} ${users[index].location.street.name}, ${users[index].location.city}, ${users[index].location.postcode}</p>
+                        <p class="modal-text">Birthday: ${users[index].dob.date}</p>
                     </div>
                 </div>
     
