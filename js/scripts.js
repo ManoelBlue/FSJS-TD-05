@@ -6,6 +6,22 @@ let isFiltered = false;
 let filteredUsers;
 
 // Helper functions:
+function addUser(user) {
+    gallery.insertAdjacentHTML("beforeend", `
+        <div class="card">
+            <div class="card-img-container">
+                <img class="card-img" src="${user.picture.medium}" alt="profile picture">
+            </div>
+            <div class="card-info-container">
+                <h3 id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
+                <p class="card-text">${user.email}</p>
+                <p class="card-text cap">${user.location.city}, ${user.location.state}</p>
+            </div>
+        </div>
+    `)
+};
+
+// Search Bar funtions:
 function addSearchBar() {
     searchBar.insertAdjacentHTML("afterbegin", `
         <form action="#" method="get">
@@ -27,20 +43,36 @@ function filterSearch() {
     isFiltered = (filteredUsers.length < users.length) ? true : false;
 };
 
-function addUser(user) {
-    gallery.insertAdjacentHTML("beforeend", `
-        <div class="card">
-            <div class="card-img-container">
-                <img class="card-img" src="${user.picture.medium}" alt="profile picture">
-            </div>
-            <div class="card-info-container">
-                <h3 id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
-                <p class="card-text">${user.email}</p>
-                <p class="card-text cap">${user.location.city}, ${user.location.state}</p>
-            </div>
-        </div>
-    `)
+// Modal Window functions:
+function removeModalWindow() {
+    const modalWindow = document.querySelector(".modal-container");
+    modalWindow.remove();
 };
+
+function switchModalWindow(newIndex) {
+    removeModalWindow();
+    showModalWindow(isFiltered ? filteredUsers[newIndex] : users[newIndex], newIndex);
+    index = newIndex;
+}
+
+function handleCardBtns(index) {
+    const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
+    const cardsLength = cards.length - 1;
+    const prev = document.getElementById("modal-prev");
+    const next = document.getElementById("modal-next");
+    const closeBtn = document.getElementById("modal-close-btn");
+
+    prev.addEventListener("click", () => {
+        let prevIndex = (index === 0) ? cardsLength : index - 1;
+        switchModalWindow(prevIndex);
+    });
+    next.addEventListener("click", () => {
+        let nextIndex = (index === cardsLength) ? 0 : index + 1;
+        switchModalWindow(nextIndex);
+    });
+
+    closeBtn.addEventListener("click", removeModalWindow);
+}
 
 function showModalWindow(user, index) {
     const dob = user.dob.date;
@@ -77,36 +109,6 @@ function showModalWindow(user, index) {
     handleCardBtns(index);
 };
 
-function removeModalWindow() {
-    const modalWindow = document.querySelector(".modal-container");
-    modalWindow.remove();
-};
-
-function switchModalWindow(newIndex) {
-    removeModalWindow();
-    showModalWindow(isFiltered ? filteredUsers[newIndex] : users[newIndex], newIndex);
-    index = newIndex;
-}
-
-function handleCardBtns(index) {
-    const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
-    const cardsLength = cards.length - 1;
-    const prev = document.getElementById("modal-prev");
-    const next = document.getElementById("modal-next");
-    const closeBtn = document.getElementById("modal-close-btn");
-
-    prev.addEventListener("click", () => {
-        let prevIndex = (index === 0) ? cardsLength : index - 1;
-        switchModalWindow(prevIndex);
-    });
-    next.addEventListener("click", () => {
-        let nextIndex = (index === cardsLength) ? 0 : index + 1;
-        switchModalWindow(nextIndex);
-    });
-
-    closeBtn.addEventListener("click", removeModalWindow);
-}
-
 // Fetch users:
 fetch("https://randomuser.me/api/?results=12&inc=name,location,email,picture,cell,dob&nat=gb,us")
     .then(response => response.json())
@@ -129,6 +131,7 @@ gallery.addEventListener("click", (e) => {
 // Call functions:
 addSearchBar();
 
+// Handle search fomr submission :
 if(document.getElementsByTagName("form")) {
     const form = document.getElementsByTagName("form")[0];
     console.log(form);
