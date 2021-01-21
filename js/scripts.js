@@ -46,9 +46,8 @@ gallery.addEventListener("click", (e) => {
     const month = dob.slice(5, 7);
     const day = dob.slice(8, 10);
 
-    console.log(card);
-    console.log(cards);
-    console.log(index);
+    const cell = selectedUser.cell;
+    const formattedCell = cell.replace(/\D/g, "").replace(/^(\d{3})(\d{3})(\d+)$/g, '($1) $2-$3');
 
     if(card) {
         gallery.insertAdjacentHTML("afterend", `
@@ -61,7 +60,7 @@ gallery.addEventListener("click", (e) => {
                         <p class="modal-text">${selectedUser.email}</p>
                         <p class="modal-text cap">${selectedUser.location.city}</p>
                         <hr>
-                        <p class="modal-text">${selectedUser.cell}</p>
+                        <p class="modal-text">${formattedCell}</p>
                         <p class="modal-text">${selectedUser.location.street.numer} ${selectedUser.location.street.name}, ${selectedUser.location.city}, ${selectedUser.location.postcode}</p>
                         <p class="modal-text">Birthday: ${month}/${day}/${year}</p>
                     </div>
