@@ -19,7 +19,7 @@ function addSearchBar() {
 }
 
 // Fetch users:
-fetch("https://randomuser.me/api/?results=12&inc=name,location,email,picture,cell,dob")
+fetch("https://randomuser.me/api/?results=12&inc=name,location,email,picture,cell,dob&nat=gb,us")
     .then(response => response.json())
     .then(json => json.results.map(user => {
         users.push(user);
@@ -81,3 +81,6 @@ gallery.addEventListener("click", (e) => {
         document.getElementById("modal-close-btn").addEventListener("click", closeModalWindow);
     }
 });
+
+// Call functions:
+addSearchBar();
