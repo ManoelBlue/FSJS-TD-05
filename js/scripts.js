@@ -33,6 +33,12 @@ gallery.addEventListener("click", (e) => {
     const card = e.target.closest(".card");
     const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
     const index = cards.indexOf(card);
+    const selectedUser = users[index];
+
+    const dob = selectedUser.dob.date;
+    const year = dob.slice(0, 4);
+    const month = dob.slice(5, 7);
+    const day = dob.slice(8, 10);
 
     console.log(card);
     console.log(cards);
@@ -44,14 +50,14 @@ gallery.addEventListener("click", (e) => {
                 <div class="modal">
                     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
                     <div class="modal-info-container">
-                        <img class="modal-img" src="${users[index].picture.medium}" alt="profile picture">
-                        <h3 id="name" class="modal-name cap">name${users[index].name.first}</h3>
-                        <p class="modal-text">${users[index].email}</p>
-                        <p class="modal-text cap">${users[index].location.city}</p>
+                        <img class="modal-img" src="${selectedUser.picture.medium}" alt="profile picture">
+                        <h3 id="name" class="modal-name cap">name${selectedUser.name.first}</h3>
+                        <p class="modal-text">${selectedUser.email}</p>
+                        <p class="modal-text cap">${selectedUser.location.city}</p>
                         <hr>
-                        <p class="modal-text">${users[index].cell}</p>
-                        <p class="modal-text">${users[index].location.street.numer} ${users[index].location.street.name}, ${users[index].location.city}, ${users[index].location.postcode}</p>
-                        <p class="modal-text">Birthday: ${users[index].dob.date}</p>
+                        <p class="modal-text">${selectedUser.cell}</p>
+                        <p class="modal-text">${selectedUser.location.street.numer} ${selectedUser.location.street.name}, ${selectedUser.location.city}, ${selectedUser.location.postcode}</p>
+                        <p class="modal-text">Birthday: ${month}/${day}/${year}</p>
                     </div>
                 </div>
     
