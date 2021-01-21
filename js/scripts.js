@@ -49,13 +49,27 @@ function removeModalWindow() {
     modalWindow.remove();
 };
 
-function switchModalWindow(newIndex) {
-    removeModalWindow();
-    showModalWindow(isFiltered ? filteredUsers[newIndex] : users[newIndex], newIndex);
+function switchInfo(users, index, date, phone) {
+    const user = users[index];
+    const userInfo = document.querySelector(".modal-info-container");
+    userInfo.innerHTML = `
+        <img class="modal-img" src="${user.picture.medium}" alt="profile picture">
+        <h3 id="name" class="modal-name cap">name${user.name.first}</h3>
+        <p class="modal-text">${user.email}</p>
+        <p class="modal-text cap">${user.location.city}</p>
+        <hr>
+        <p class="modal-text">${phone}</p>
+        <p class="modal-text">${user.location.street.numer} ${user.location.street.name}, ${user.location.city}, ${user.location.postcode}</p>
+        <p class="modal-text">Birthday: ${date}</p>
+    `;
+};
+
+function switchModalWindow(users, newIndex, date, phone) {
+    switchInfo(users, newIndex, date, phone);
     index = newIndex;
 }
 
-function handleCardBtns(index) {
+function handleCardBtns(users, index, date, phone) {
     const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
     const cardsLength = cards.length - 1;
     const prev = document.getElementById("modal-prev");
@@ -64,21 +78,24 @@ function handleCardBtns(index) {
 
     prev.addEventListener("click", () => {
         let prevIndex = (index === 0) ? cardsLength : index - 1;
-        switchModalWindow(prevIndex);
+        switchModalWindow(users, prevIndex, date, phone);
     });
     next.addEventListener("click", () => {
         let nextIndex = (index === cardsLength) ? 0 : index + 1;
-        switchModalWindow(nextIndex);
+        switchModalWindow(users, nextIndex, date, phone);
     });
 
     closeBtn.addEventListener("click", removeModalWindow);
 }
 
-function showModalWindow(user, index) {
+function showModalWindow(users, index) {
+    const user = users[index];
+
     const dob = user.dob.date;
     const year = dob.slice(0, 4);
     const month = dob.slice(5, 7);
     const day = dob.slice(8, 10);
+    const date = `${month}/${day}/${year}`;
 
     const cell = user.cell;
     const formattedCell = cell.replace(/\D/g, "").replace(/^(\d{3})(\d{3})(\d+)$/g, '($1) $2-$3');
@@ -95,7 +112,7 @@ function showModalWindow(user, index) {
                     <hr>
                     <p class="modal-text">${formattedCell}</p>
                     <p class="modal-text">${user.location.street.numer} ${user.location.street.name}, ${user.location.city}, ${user.location.postcode}</p>
-                    <p class="modal-text">Birthday: ${month}/${day}/${year}</p>
+                    <p class="modal-text">Birthday: ${date}</p>
                 </div>
             </div>
 
@@ -106,7 +123,7 @@ function showModalWindow(user, index) {
         </div>
     `)
 
-    handleCardBtns(index);
+    handleCardBtns(users, index, date, formattedCell);
 };
 
 // Fetch users:
@@ -123,9 +140,9 @@ gallery.addEventListener("click", (e) => {
     const card = e.target.closest(".card");
     const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
     const index = cards.indexOf(card);
-    const selectedUser = isFiltered ? filteredUsers[index] : users[index];
+    const selectedUsers = isFiltered ? filteredUsers : users;
 
-    showModalWindow(selectedUser, index);
+    showModalWindow(selectedUsers, index);
 });
 
 // Call functions:
@@ -134,7 +151,5 @@ addSearchBar();
 // Handle search fomr submission :
 if(document.getElementsByTagName("form")) {
     const form = document.getElementsByTagName("form")[0];
-    console.log(form);
-
     form.addEventListener("submit", filterSearch);
 }
